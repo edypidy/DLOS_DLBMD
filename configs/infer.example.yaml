@@ -1,0 +1,55 @@
+data:
+  # Manifest and base directories (relative paths are resolved from project root).
+  manifest_path: "./data/manifest.json" # change to the manifest you want to use
+  image_base_dir: ""
+  bone_base_dir: ""
+  nonbone_base_dir: ""
+
+  # Keep policy aligned with training config for model compatibility.
+  use_manifest_bone_mask: true
+
+  # Manifest key names.
+  patient_id_key: "patient_id"
+  label_key: "label"
+  t_score_key: "t_score"
+  split_key: "split"
+
+  # Split behavior.
+  # Set false if manifest already contains split values.
+  generate_split: false
+  train_ratio: 0.7
+  valid_ratio: 0.15
+  test_ratio: 0.15
+  seed: 42
+
+  # Windowing (HU domain).
+  ww: 1800
+  wc: 400
+
+  # Usually not used at inference time, but kept for config parity.
+  use_monai_transforms: true
+  rand_flip_prob: 0.0
+  rand_rotate90_prob: 0.0
+  rand_affine_prob: 0.0
+
+model:
+  # Must match the checkpoint architecture.
+  growth_rate: 32
+  block_config: [6, 12, 24, 16]
+  inverse_attention: true
+  attentive_regularization: false
+  split_denominator: 2
+  num_classes: 3
+  regression: true
+
+infer:
+  # Runtime / outputs.
+  output_dir: "./outputs/infer" # change to the output directory you want to use
+  checkpoint_path: "./outputs/train/epoch_300.pt" # change to the checkpoint you want to use
+  use_gpu: true
+
+  # Data loading.
+  batch_size: 2
+  num_workers: 0
+  split: "test"
+

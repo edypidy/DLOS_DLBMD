@@ -1,0 +1,69 @@
+data:
+  # Manifest and base directories (relative paths are resolved from project root).
+  manifest_path: "./data/manifest.json" # change to the manifest you want to use
+  image_base_dir: ""
+  bone_base_dir: ""
+  nonbone_base_dir: ""
+
+  # Inverse-attention target policy:
+  # - true: require bone_path for every training sample.
+  # - false: ignore bone_path and use HU fallback (train.hu_threshold required).
+  use_manifest_bone_mask: true
+
+  # Manifest key names.
+  patient_id_key: "patient_id"
+  label_key: "label"
+  t_score_key: "t_score"
+  split_key: "split"
+
+  # Split behavior.
+  generate_split: true
+  train_ratio: 0.7
+  valid_ratio: 0.15
+  test_ratio: 0.15
+  seed: 42
+
+  # Windowing (HU domain).
+  ww: 1800
+  wc: 400
+
+  # MONAI augmentation switches.
+  use_monai_transforms: true
+  rand_flip_prob: 0.0
+  rand_rotate90_prob: 0.0
+  rand_affine_prob: 0.2
+
+model:
+  # DenseNet3D backbone.
+  growth_rate: 32
+  block_config: [6, 12, 24, 16]
+
+  # Heads / losses.
+  inverse_attention: true
+  attentive_regularization: false
+  split_denominator: 2
+  num_classes: 3
+  regression: true
+
+train:
+  # Runtime / outputs.
+  output_dir: "./outputs/train" # change to the output directory you want to use
+  use_gpu: true
+
+  # Optimization.
+  epochs: 300
+  batch_size: 4
+  num_workers: 0
+  lr: 0.0001
+  weight_decay: 0.00001
+  warmup_epochs: 1
+  save_every: 1
+  seed: 42
+
+  # Required when:
+  # - data.use_manifest_bone_mask=false
+  # - model.inverse_attention=true
+  hu_threshold: 200
+  inv_loss_weight: 1.0
+  reg_loss_weight: 1.0
+
