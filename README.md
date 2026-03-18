@@ -1,2 +1,2 @@
-# DLOS_OLDCT
+# DLOS_DLBMD
 Repository for "Deep Learning–Based Opportunistic Screening for Osteoporosis on Low-Dose Chest CT: Development and Multicenter Validation."
