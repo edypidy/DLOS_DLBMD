@@ -25,7 +25,7 @@ data:
 
   # Windowing (HU domain).
   ww: 1900 # 1900 ~ 1800
-  wc: 300 # 300 ~ 400
+  wc: 300  # 300 ~ 400
 
   # MONAI augmentation switches.
   use_monai_transforms: true
