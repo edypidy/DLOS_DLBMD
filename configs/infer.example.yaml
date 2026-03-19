@@ -23,8 +23,8 @@ data:
   seed: 42
 
   # Windowing (HU domain).
-  ww: 1800
-  wc: 400
+  ww: 1900 # 1900 ~ 1800
+  wc: 300  # 300 ~ 400
 
   # Usually not used at inference time, but kept for config parity.
   use_monai_transforms: true
