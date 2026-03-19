@@ -70,6 +70,16 @@ Important: HU-threshold-based bone map generation must use `image_hu`, not `imag
   - `target_region = manifest bone_mask` only when `data.use_manifest_bone_mask=true`
   - `inv_bone = 1 - target_region`
 
+## Environment
+
+Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+For a CUDA-enabled GPU, install `torch` that matches your driver using the [PyTorch install guide](https://pytorch.org/get-started/locally/) first, then run `pip install -r requirements.txt` so the rest of the dependencies are installed without forcing a CPU-only `torch` wheel.
+
 ## How To Run
 
 Training:

@@ -1,0 +1,9 @@
+# Train / infer
+torch>=2.0
+numpy>=1.24
+PyYAML>=6.0
+SimpleITK>=2.3
+monai>=1.3
+
+# scripts/convert_csv_to_manifest.py
+pandas>=2.0
