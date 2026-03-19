@@ -78,8 +78,6 @@ Install dependencies:
 pip install -r requirements.txt
 ```
 
-For a CUDA-enabled GPU, install `torch` that matches your driver using the [PyTorch install guide](https://pytorch.org/get-started/locally/) first, then run `pip install -r requirements.txt` so the rest of the dependencies are installed without forcing a CPU-only `torch` wheel.
-
 ## How To Run
 
 Training:
