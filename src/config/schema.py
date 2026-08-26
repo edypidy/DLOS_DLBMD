@@ -16,6 +16,7 @@ class DataConfig:
     # set the ratio fitting your dataset for train/valid/test split
     split_key: str = "split" # key for split in manifest
     generate_split: bool = True # generate split from patient_id if not provided in manifest
+    # if you want
     train_ratio: float = 0.7
     valid_ratio: float = 0.15
     test_ratio: float = 0.15
@@ -27,7 +28,7 @@ class DataConfig:
     # monai transform parameters
     rand_flip_prob: float = 0.0
     rand_rotate90_prob: float = 0.0
-    rand_affine_prob: float = 0.2
+    rand_affine_prob: float = 0.1
 
 
 @dataclass
@@ -35,19 +36,19 @@ class ModelConfig:
     growth_rate: int = 32
     block_config: Tuple[int, int, int, int] = (6, 12, 24, 16)
     inverse_attention: bool = True
-    attentive_regularization: bool = False
+    attentive_regularization: bool = True
     split_denominator: int = 2
-    num_classes: int = 3
-    regression: bool = False
+    num_classes: int = 2
+    regression: bool = True
 
 
 @dataclass
 class TrainConfig:
     output_dir: str = "outputs/train"
-    epochs: int = 100
+    epochs: int = 300
     batch_size: int = 4
     num_workers: int = 0
-    lr: float = 1e-4
+    lr: float = 1e-3
     weight_decay: float = 1e-5
     warmup_epochs: int = 1
     save_every: int = 1
