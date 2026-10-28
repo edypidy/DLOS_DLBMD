@@ -80,7 +80,7 @@ class DLBMD(nn.Module):
         block_config=(6, 12, 24, 16),
         inverse_attention: bool = False,
         attentive_regularization: bool = False,
-        split_denominator: int = 2,
+        split_denominator: int = 1,
         num_classes: int = 3,
         regression: bool = False,
     ):
@@ -134,7 +134,7 @@ class DLBMD(nn.Module):
         x = self.dense_block1(x)
 
         if self.inverse_attention:
-            x_split = x[:, : self.split_size, ...]
+            x_split = x[:, : self.split_size, ...].clone()
             x_non_split = x[:, self.split_size :, ...]
             spatial_map = self.sigmoid(self.spatial_block(x_split))
             if not self.attentive_regularization:
