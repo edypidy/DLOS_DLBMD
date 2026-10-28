@@ -96,11 +96,6 @@ class DLBMD(nn.Module):
 
         self.dense_block1 = _DenseBlock(in_channels, growth_rate, bn_size, block_config[0])
         in_channels += block_config[0] * growth_rate
-        self.transition1 = _TransitionMaintainSize(in_channels, in_channels // 2)
-        in_channels = in_channels // 2
-
-        self.dense_block2 = _DenseBlock(in_channels, growth_rate, bn_size, block_config[1])
-        in_channels += block_config[1] * growth_rate
 
         self.inverse_attention = inverse_attention
         if inverse_attention:
@@ -108,6 +103,12 @@ class DLBMD(nn.Module):
             self.attentive_regularization = attentive_regularization
             self.spatial_block = SpatialBlock(self.split_size, out_channels=1)
             self.sigmoid = nn.Sigmoid()
+            
+        self.transition1 = _TransitionMaintainSize(in_channels, in_channels // 2)
+        in_channels = in_channels // 2
+
+        self.dense_block2 = _DenseBlock(in_channels, growth_rate, bn_size, block_config[1])
+        in_channels += block_config[1] * growth_rate
 
         self.transition2 = _Transition(in_channels, in_channels // 2)
         in_channels = in_channels // 2
@@ -131,8 +132,6 @@ class DLBMD(nn.Module):
     def forward(self, x: torch.Tensor):
         x = self.first_conv(x)
         x = self.dense_block1(x)
-        x = self.transition1(x)
-        x = self.dense_block2(x)
 
         if self.inverse_attention:
             x_split = x[:, : self.split_size, ...]
@@ -142,6 +141,8 @@ class DLBMD(nn.Module):
                 x_split = spatial_map * x_split
                 x = torch.cat([x_split, x_non_split], dim=1)
 
+        x = self.transition1(x)
+        x = self.dense_block2(x)
         x = self.transition2(x)
         x = self.dense_block3(x)
         x = self.transition3(x)
