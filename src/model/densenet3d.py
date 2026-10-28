@@ -134,7 +134,7 @@ class DLBMD(nn.Module):
         x = self.dense_block1(x)
 
         if self.inverse_attention:
-            x_split = x[:, : self.split_size, ...].clone()
+            x_split = x[:, : self.split_size, ...].clone().detach()
             x_non_split = x[:, self.split_size :, ...]
             spatial_map = self.sigmoid(self.spatial_block(x_split))
             if not self.attentive_regularization:
